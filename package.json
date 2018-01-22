@@ -1,0 +1,36 @@
+{
+    "name": "piano_coach",
+    "author": "Daniel Mecke <daniel.mecke@cunningsoft.de>",
+    "license": "MIT",
+    "scripts": {
+        "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot",
+        "build": "cross-env NODE_ENV=production webpack --hide-modules"
+    },
+    "dependencies": {
+        "vue": "^2.5.13",
+        "opensheetmusicdisplay": "^0.2.1"
+    },
+    "devDependencies": {
+        "autoprefixer": "^7.2.5",
+        "babel-core": "^6.26.0",
+        "babel-loader": "^7.1.2",
+        "babel-preset-env": "^1.6.1",
+        "cross-env": "^5.1.3",
+        "css-loader": "^0.28.9",
+        "extract-text-webpack-plugin": "^3.0.2",
+        "file-loader": "^1.1.6",
+        "node-sass": "^4.7.2",
+        "postcss-loader": "^2.0.10",
+        "raw-loader": "^0.5.1",
+        "sass-loader": "^6.0.6",
+        "style-loader": "^0.19.1",
+        "ts-loader": "^3.3.0",
+        "typescript": "^2.6.2",
+        "vue-class-component": "^6.1.2",
+        "vue-loader": "^13.7.0",
+        "vue-style-loader": "^3.0.3",
+        "vue-template-compiler": "^2.5.13",
+        "webpack": "^3.10.0",
+        "webpack-dev-server": "^2.11.0"
+    }
+}
