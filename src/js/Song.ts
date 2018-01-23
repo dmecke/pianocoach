@@ -1,8 +1,10 @@
 export default class Song {
 
+    title: string;
     xml: string;
 
-    constructor(xml) {
+    constructor(title: string, xml) {
+        this.title = title;
         this.xml = xml;
     }
 }

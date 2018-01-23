@@ -1,8 +1,9 @@
 <template>
     <select v-model="song" @change="change()">
-        <option value="tonleiter">Tonleiter</option>
-        <option value="demons">Demons</option>
-        <option value="starwars">Star Wars</option>
+        <option :value="s" v-for="s in songs">{{ s.title }}</option>
+        <!--<option value="tonleiter">Tonleiter</option>-->
+        <!--<option value="demons">Demons</option>-->
+        <!--<option value="starwars">Star Wars</option>-->
     </select>
 </template>
 
@@ -19,18 +20,19 @@ import * as StarWars from '../song/starwars.xml';
 @Component
 export default class SongSelection extends Vue {
 
-    song: string = 'tonleiter';
-    songs: object = {
-        tonleiter: new Song(SongTonleiter),
-        demons: new Song(SongDemons),
-        starwars: new Song(StarWars)
-    };
+    song: Song = null;
+    songs: Array<Song> = [
+        new Song('tonleiter', SongTonleiter),
+        new Song('demons', SongDemons),
+        new Song('starwars', StarWars)
+    ];
 
     change() {
-        this.$emit('change', this.songs[this.song]);
+        this.$emit('change', this.song);
     }
 
     created() {
+        this.song = this.songs[0];
         this.change();
     }
 

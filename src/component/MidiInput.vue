@@ -5,7 +5,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import Song from '../js/Song';
-import { OSMD } from 'opensheetmusicdisplay';
+import SongWrapper from "../js/SongWrapper";
 
 @Component({
     props: {
@@ -21,8 +21,8 @@ import { OSMD } from 'opensheetmusicdisplay';
             type: Number,
             required: true,
         },
-        osmd: {
-            type: OSMD,
+        wrapper: {
+            type: SongWrapper,
             required: false,
         }
     },
@@ -32,10 +32,10 @@ export default class MidiInput extends Vue {
     song: Song;
     measureIndex: number;
     staffEntryIndex: number;
-    osmd: OSMD;
+    wrapper: SongWrapper;
 
     get currentNote() {
-        return this.osmd.graphic.measureList[this.measureIndex][0].staffEntries[this.staffEntryIndex].sourceStaffEntry.voiceEntries[0].notes[0].halfTone;
+        return this.wrapper.getSongElementAt(this.measureIndex, this.staffEntryIndex).getHalfTone();
     }
 
     codeToNote(code) {
