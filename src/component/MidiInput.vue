@@ -13,10 +13,6 @@ import { OSMD } from 'opensheetmusicdisplay';
             type: Song,
             required: true,
         },
-        index: {
-            type: Number,
-            required: true,
-        },
         measureIndex: {
             type: Number,
             required: true,
@@ -34,7 +30,6 @@ import { OSMD } from 'opensheetmusicdisplay';
 export default class MidiInput extends Vue {
 
     song: Song;
-    index: number;
     measureIndex: number;
     staffEntryIndex: number;
     osmd: OSMD;

@@ -13,10 +13,6 @@ import { OSMD } from 'opensheetmusicdisplay';
             type: String,
             required: true,
         },
-        index: {
-            type: Number,
-            required: true,
-        },
         measureIndex: {
             type: Number,
             required: true,
@@ -30,9 +26,6 @@ import { OSMD } from 'opensheetmusicdisplay';
         song() {
             this.loadSong();
             this.renderScore();
-        },
-        index() {
-            this.renderScore();
         }
     }
 })
@@ -40,7 +33,6 @@ export default class Score extends Vue {
 
     osmd: OSMD|null = null;
     song: string;
-    index: number;
     measureIndex: number;
     staffEntryIndex: number;
 

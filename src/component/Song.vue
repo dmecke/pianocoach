@@ -1,8 +1,8 @@
 <template>
     <div v-if="song">
-        <div>Fehler: {{ errors }}</div>
-        <pc-score :song="song.xml" :index="noteIndex" :measure-index="measureIndex" :staff-entry-index="staffEntryIndex" @loaded="onLoadOsmd($event)"></pc-score>
-        <pc-midi-input :song="song" :index="noteIndex" :osmd="osmd" :measure-index="measureIndex" :staff-entry-index="staffEntryIndex" @notePlayed="onNotePlayed()" @noteError="errors++"></pc-midi-input>
+        <div>Missed Notes: {{ errors }}</div>
+        <pc-score :song="song.xml" :measure-index="measureIndex" :staff-entry-index="staffEntryIndex" @loaded="onLoadOsmd($event)"></pc-score>
+        <pc-midi-input :song="song" :osmd="osmd" :measure-index="measureIndex" :staff-entry-index="staffEntryIndex" @notePlayed="onNotePlayed()" @noteError="errors++"></pc-midi-input>
     </div>
 </template>
 
@@ -33,7 +33,6 @@ import { OSMD } from 'opensheetmusicdisplay';
 })
 export default class Song extends Vue {
 
-    noteIndex: number = 0;
     measureIndex: number = 0;
     staffEntryIndex: number = 0;
     errors: number = 0;
@@ -45,14 +44,12 @@ export default class Song extends Vue {
     }
 
     resetSong() {
-        this.noteIndex = 0;
         this.measureIndex = 0;
         this.staffEntryIndex = 0;
         this.errors = 0;
     }
 
     onNotePlayed() {
-        this.noteIndex++;
         if (this.staffEntryIndex < this.osmd.graphic.measureList[this.measureIndex][0].staffEntries.length - 1) {
             this.staffEntryIndex++;
         } else if (this.measureIndex < this.osmd.graphic.measureList.length) {
