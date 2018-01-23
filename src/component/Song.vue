@@ -1,7 +1,7 @@
 <template>
     <div v-if="song">
         <div>Missed Notes: {{ errors }}</div>
-        <pc-score :song="song.xml" :measure-index="measureIndex" :staff-entry-index="staffEntryIndex" @loaded="onLoadOsmd($event)"></pc-score>
+        <pc-score :song="song" :measure-index="measureIndex" :staff-entry-index="staffEntryIndex" @loaded="onLoadOsmd($event)"></pc-score>
         <pc-midi-input :song="song" :osmd="osmd" :measure-index="measureIndex" :staff-entry-index="staffEntryIndex" @notePlayed="onNotePlayed()" @noteError="errors++"></pc-midi-input>
     </div>
 </template>
@@ -50,14 +50,16 @@ export default class Song extends Vue {
     }
 
     onNotePlayed() {
-        if (this.staffEntryIndex < this.osmd.graphic.measureList[this.measureIndex][0].staffEntries.length - 1) {
-            this.staffEntryIndex++;
-        } else if (this.measureIndex < this.osmd.graphic.measureList.length) {
-            this.staffEntryIndex = 0;
-            this.measureIndex++;
-        } else {
-            this.finishSong();
-        }
+        do {
+            if (this.staffEntryIndex < this.osmd.graphic.measureList[this.measureIndex][0].staffEntries.length - 1) {
+                this.staffEntryIndex++;
+            } else if (this.measureIndex < this.osmd.graphic.measureList.length - 1) {
+                this.staffEntryIndex = 0;
+                this.measureIndex++;
+            } else {
+                this.finishSong();
+            }
+        } while (this.osmd.graphic.measureList[this.measureIndex][0].staffEntries[this.staffEntryIndex].vfNotes[1].noteType === 'r'); // 'r' is a pause
     }
 
     onLoadOsmd(osmd) {

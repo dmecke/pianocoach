@@ -6,11 +6,12 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { OSMD } from 'opensheetmusicdisplay';
+import Song from "../js/Song";
 
 @Component({
     props: {
         song: {
-            type: String,
+            type: Song,
             required: true,
         },
         measureIndex: {
@@ -26,13 +27,19 @@ import { OSMD } from 'opensheetmusicdisplay';
         song() {
             this.loadSong();
             this.renderScore();
+        },
+        measureIndex() {
+            this.renderScore();
+        },
+        staffEntryIndex() {
+            this.renderScore();
         }
     }
 })
 export default class Score extends Vue {
 
     osmd: OSMD|null = null;
-    song: string;
+    song: Song;
     measureIndex: number;
     staffEntryIndex: number;
 
@@ -48,7 +55,7 @@ export default class Score extends Vue {
     }
 
     loadSong() {
-        this.osmd.load(this.song);
+        this.osmd.load(this.song.xml);
         this.$emit('loaded', this.osmd);
     }
 
