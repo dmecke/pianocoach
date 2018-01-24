@@ -10,7 +10,8 @@
         "normalize.css": "^7.0.0",
         "opensheetmusicdisplay": "^0.2.1",
         "vue": "^2.5.13",
-        "vue-router": "^3.0.1"
+        "vue-router": "^3.0.1",
+        "vuetify": "^0.17.6"
     },
     "devDependencies": {
         "autoprefixer": "^7.2.5",

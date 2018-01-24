@@ -1,15 +1,26 @@
 <template>
     <div>
-        <h2>Highscore</h2>
-        <ul v-if="songEntity.highscores.length > 0">
-            <li v-for="highscore in songEntity.highscores">
-                <span>{{ highscore.errors }} Errors</span>
-                <span>{{ highscore.date }}</span>
-            </li>
-        </ul>
-        <p v-else>No entries yet.</p>
+        <v-btn color="indigo" dark @click.stop="highscore = true">Highscore</v-btn>
+        <v-dialog v-model="highscore" max-width="500px">
+            <v-card>
+                <v-card-title><h3 class="headline">Highscore</h3></v-card-title>
+                <v-card-text>
+                    <v-list two-line v-if="songEntity.highscores.length > 0">
+                        <v-list-tile v-for="highscore in songEntity.highscores">
+                            <v-list-tile-content>
+                                <v-list-tile-title>{{ highscore.errors }} Errors</v-list-tile-title>
+                                <v-list-tile-sub-title>{{ highscore.date }}</v-list-tile-sub-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                    </v-list>
+                    <p v-else>No entries yet.</p>
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn flat @click.stop="highscore = false">Close</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
 
-        <h2>Score</h2>
         <pc-song :song="songEntity"></pc-song>
     </div>
 </template>
@@ -35,6 +46,7 @@ import SongRepository from "../js/SongRepository";
 export default class PageSong extends Vue {
 
     private song: string;
+    highscore: boolean = false;
 
     get songEntity(): SongEntity {
         return SongRepository.find(this.song);
