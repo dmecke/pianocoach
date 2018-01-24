@@ -1,5 +1,5 @@
 <template>
-    <div v-if="song">
+    <div>
         <div>Missed Notes: {{ errors }}</div>
         <pc-score :song="song" :measure-index="measureIndex" :staff-entry-index="staffEntryIndex" @loaded="onSongLoaded($event)"></pc-score>
         <pc-midi-input :song="song" :wrapper="wrapper" :measure-index="measureIndex" :staff-entry-index="staffEntryIndex" @notePlayed="onNotePlayed()" @noteError="errors++"></pc-midi-input>
@@ -23,7 +23,7 @@ import Highscore from "../js/Highscore";
     props: {
         song: {
             type: SongEntity,
-            required: false,
+            required: true,
         }
     },
     watch: {
@@ -38,7 +38,7 @@ export default class Song extends Vue {
     staffEntryIndex: number = 0;
     errors: number = 0;
     wrapper: SongWrapper|null = null;
-    song: SongEntity|null = null;
+    song: SongEntity|null;
 
     finishSong() {
         this.song.addHighscore(new Highscore(this.errors));
