@@ -13,6 +13,7 @@ import MidiInput from './MidiInput.vue';
 import Score from './Score.vue';
 import SongEntity from '../js/Song';
 import SongWrapper from "../js/SongWrapper";
+import Highscore from "../js/Highscore";
 
 @Component({
     components: {
@@ -40,6 +41,7 @@ export default class Song extends Vue {
     song: SongEntity|null = null;
 
     finishSong() {
+        this.song.addHighscore(new Highscore(this.errors));
         this.resetSong();
     }
 

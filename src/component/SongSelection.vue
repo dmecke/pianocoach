@@ -1,9 +1,6 @@
 <template>
     <select v-model="song" @change="change()">
         <option :value="s" v-for="s in songs">{{ s.title }}</option>
-        <!--<option value="tonleiter">Tonleiter</option>-->
-        <!--<option value="demons">Demons</option>-->
-        <!--<option value="starwars">Star Wars</option>-->
     </select>
 </template>
 

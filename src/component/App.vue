@@ -1,6 +1,20 @@
 <template>
     <div>
         <pc-song-selection @change="song = $event"></pc-song-selection>
+        <table v-if="song">
+            <thead>
+                <tr>
+                    <th>Fehler</th>
+                    <th>Datum</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="highscore in song.highscores">
+                    <td>{{ highscore.errors }}</td>
+                    <td>{{ highscore.date }}</td>
+                </tr>
+            </tbody>
+        </table>
         <pc-song :song="song"></pc-song>
     </div>
 </template>
@@ -20,7 +34,6 @@ import SongSelection from './SongSelection.vue';
 })
 export default class App extends Vue {
 
-    song: Song|null = null;
-
+    private song: Song|null = null;
 }
 </script>
