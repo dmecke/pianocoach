@@ -1,5 +1,4 @@
-import './style/normalize.css';
-import './style/global.scss';
+import 'normalize.css';
 
 import Vue from 'vue';
 

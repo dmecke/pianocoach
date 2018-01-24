@@ -7,8 +7,9 @@
         "build": "cross-env NODE_ENV=production webpack --hide-modules"
     },
     "dependencies": {
-        "vue": "^2.5.13",
-        "opensheetmusicdisplay": "^0.2.1"
+        "normalize.css": "^7.0.0",
+        "opensheetmusicdisplay": "^0.2.1",
+        "vue": "^2.5.13"
     },
     "devDependencies": {
         "autoprefixer": "^7.2.5",
