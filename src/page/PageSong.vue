@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-btn color="indigo" dark @click.stop="highscore = true">Highscore</v-btn>
+        <v-btn primary @click.stop="highscore = true">Highscore</v-btn>
         <v-dialog v-model="highscore" max-width="500px">
             <v-card>
                 <v-card-title><h3 class="headline">Highscore</h3></v-card-title>

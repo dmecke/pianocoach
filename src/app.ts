@@ -13,12 +13,22 @@ import 'vuetify/dist/vuetify.css';
 import './style/global.scss';
 
 Vue.use(VueRouter);
-Vue.use(Vuetify);
+Vue.use(Vuetify, {
+    theme: {
+        primary: '#3F51B5',
+        secondary: '#4CAF50',
+        accent: '#303f9f ',
+        error: '#F44336',
+        info: '#3F51B5',
+        success: '#4CAF50',
+        warning: '#FFC107'
+    }
+});
 
 let routes = [
     { path: '/', redirect: '/songs' },
-    { path: '/songs', component: PageSongs },
-    { path: '/song/:song', component: PageSong, props: true }
+    { path: '/songs', component: PageSongs, name: 'songs' },
+    { path: '/song/:song', component: PageSong, name: 'song', props: true }
 ];
 let router = new VueRouter({ routes });
 

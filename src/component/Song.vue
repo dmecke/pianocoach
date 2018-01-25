@@ -1,7 +1,7 @@
 <template>
     <div>
-        <v-chip text-color="white" color="indigo">
-            <v-avatar class="indigo darken-4">{{ errors }}</v-avatar>
+        <v-chip text-color="white" class="primary">
+            <v-avatar class="accent">{{ errors }}</v-avatar>
             Missed Notes
         </v-chip>
         <pc-score :song="song" :measure-index="measureIndex" :staff-entry-index="staffEntryIndex" @loaded="onSongLoaded($event)"></pc-score>
