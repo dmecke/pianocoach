@@ -64,7 +64,7 @@ export default class Song extends Vue {
             } else {
                 this.finishSong();
             }
-        } while (this.wrapper.getSongElementAt(this.measureIndex, this.staffEntryIndex).isPause());
+        } while (this.wrapper.isSkipped(this.measureIndex, this.staffEntryIndex));
     }
 
     onSongLoaded(wrapper) {

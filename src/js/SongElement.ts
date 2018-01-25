@@ -1,4 +1,5 @@
 import {VexFlowStaffEntry} from "opensheetmusicdisplay/dist/src/MusicalScore/Graphical/VexFlow/VexFlowStaffEntry";
+import {StaveNote} from 'opensheetmusicdisplay/external/vexflow/vexflow';
 
 export default class SongElement {
 
@@ -13,7 +14,19 @@ export default class SongElement {
     }
 
     public isPause(): boolean {
-        return this.element.vfNotes[1].noteType === 'r';
+        return this.getNote().noteType === 'r';
+    }
+
+    public getVexFlowId(): string {
+        return this.getNote().attrs.id;
+    }
+
+    public getDuration(): string {
+        return this.getNote().duration;
+    }
+
+    private getNote(): StaveNote {
+        return this.element.vfNotes[1];
     }
 
 }

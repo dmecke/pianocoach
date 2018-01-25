@@ -38,11 +38,29 @@ export default class SongWrapper {
         this.measureList[measureIndex][0].staffEntries[staffEntryIndex].vfNotes[1].setStyle({ fillStyle: 'red', strokeStyle: 'red' });
     }
 
+    public isSkipped(measureIndex: number, staffEntryIndex: number): boolean {
+        if (this.getSongElementAt(measureIndex, staffEntryIndex).isPause()) {
+            return true;
+        }
+
+        if (this.isEndOfTie(measureIndex, staffEntryIndex)) {
+            return true;
+        }
+
+        return false;
+    }
+
     public getNumberOfMeasures(): number {
         return this.measureList.length;
     }
 
     public getNumberOfStaffEntriesInMeasure(measureIndex): number {
         return this.measureList[measureIndex][0].staffEntries.length;
+    }
+
+    private isEndOfTie(measureIndex: number, staffEntryIndex: number): boolean {
+        let element = this.getSongElementAt(measureIndex, staffEntryIndex);
+
+        return this.measureList[measureIndex][0].vfTies.filter(staveTie => !!staveTie.last_note && staveTie.last_note.attrs.id === element.getVexFlowId()).length > 0;
     }
 }
