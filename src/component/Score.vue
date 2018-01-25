@@ -1,5 +1,5 @@
 <template>
-    <div></div>
+    <div style="width: 10000px; transform: translateX(0)"></div>
 </template>
 
 <script lang="ts">
@@ -45,7 +45,7 @@ export default class Score extends Vue {
 
     renderScore() {
         this.wrapper.highlightNote(this.measureIndex, this.staffEntryIndex);
-        this.wrapper.render();
+        this.wrapper.render(this.measureIndex, this.staffEntryIndex);
     }
 
     loadSong() {

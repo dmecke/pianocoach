@@ -9,7 +9,7 @@ export default class SongWrapper {
     private measureList: Array<StaffMeasure>|null = [];
 
     constructor(element) {
-        this.osmd = new OSMD(element, true);
+        this.osmd = new OSMD(element);
     }
 
     public loadSong(song: Song): Promise<void> {
@@ -21,8 +21,16 @@ export default class SongWrapper {
         });
     }
 
-    public render(): void {
+    public render(measureIndex: number, staffEntryIndex: number): void {
         this.osmd.zoom = 2.0;
+
+        let x = 500;
+        if (measureIndex === 0 && staffEntryIndex === 0) {
+            x -= 250; // on the very first note, the offset is somehow 0
+        }
+        x -= this.measureList[measureIndex][0].stave.x * 2;
+
+        this.osmd.container.style.transform = 'translateX(' + x + 'px)';
         this.osmd.render();
     }
 

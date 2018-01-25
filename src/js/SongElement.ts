@@ -1,5 +1,6 @@
 import {VexFlowStaffEntry} from "opensheetmusicdisplay/dist/src/MusicalScore/Graphical/VexFlow/VexFlowStaffEntry";
-import {StaveNote} from 'opensheetmusicdisplay/external/vexflow/vexflow';
+import {StaveNote} from 'vexflow/src/stavenote';
+// import {StaveNote} from 'opensheetmusicdisplay/external/vexflow/vexflow';
 
 export default class SongElement {
 
