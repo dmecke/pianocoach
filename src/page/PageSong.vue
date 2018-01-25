@@ -6,7 +6,7 @@
                 <v-card-title><h3 class="headline">Highscore</h3></v-card-title>
                 <v-card-text>
                     <v-list two-line v-if="songEntity.highscores.length > 0">
-                        <v-list-tile v-for="highscore in songEntity.highscores">
+                        <v-list-tile v-for="(highscore, index) in songEntity.highscores" :key="index">
                             <v-list-tile-content>
                                 <v-list-tile-title>{{ highscore.errors }} Errors</v-list-tile-title>
                                 <v-list-tile-sub-title>{{ highscore.date }}</v-list-tile-sub-title>
