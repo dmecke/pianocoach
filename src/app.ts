@@ -1,18 +1,15 @@
 import 'normalize.css';
 
 import Vue from 'vue';
-import VueRouter from 'vue-router';
 import Vuetify from 'vuetify';
 
 import App from './component/App.vue';
 
-import PageSong from './page/PageSong.vue';
-import PageSongs from './page/PageSongs.vue';
-
 import 'vuetify/dist/vuetify.css';
 import './style/global.scss';
 
-Vue.use(VueRouter);
+import router from './router';
+
 Vue.use(Vuetify, {
     theme: {
         primary: '#3F51B5',
@@ -24,13 +21,6 @@ Vue.use(Vuetify, {
         warning: '#FFC107'
     }
 });
-
-let routes = [
-    { path: '/', redirect: '/songs' },
-    { path: '/songs', component: PageSongs, name: 'songs' },
-    { path: '/song/:song', component: PageSong, name: 'song', props: true }
-];
-let router = new VueRouter({ routes });
 
 new Vue({
     el: '#app',
