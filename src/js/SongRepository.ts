@@ -5,6 +5,7 @@ import Song from "./Song";
 import * as SongTonleiter from '../song/tonleiter.xml';
 import * as SongDemons from '../song/demons.xml';
 import * as SongStarWars from '../song/starwars.xml';
+import * as SongTetris from '../song/tetris.xml';
 
 export default class SongRepository {
 
@@ -19,6 +20,9 @@ export default class SongRepository {
 
             case 'starwars':
                 return new Song(name, SongStarWars);
+
+            case 'tetris':
+                return new Song(name, SongTetris);
         }
     }
 
@@ -27,6 +31,7 @@ export default class SongRepository {
             new Song('tonleiter', SongTonleiter),
             new Song('demons', SongDemons),
             new Song('starwars', SongStarWars),
+            new Song('tetris', SongTetris),
         ]
     }
 
