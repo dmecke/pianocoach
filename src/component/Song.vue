@@ -38,13 +38,14 @@ import Highscore from "../js/Highscore";
 export default class Song extends Vue {
 
     measureIndex: number = 0;
+    startedAt: number = null;
     staffEntryIndex: number = 0;
     errors: number = 0;
     wrapper: SongWrapper|null = null;
     song: SongEntity|null;
 
     finishSong() {
-        this.song.addHighscore(new Highscore(this.errors));
+        this.song.addHighscore(new Highscore(this.errors, Date.now() - this.startedAt));
         this.resetSong();
     }
 
@@ -52,9 +53,13 @@ export default class Song extends Vue {
         this.measureIndex = 0;
         this.staffEntryIndex = 0;
         this.errors = 0;
+        this.startedAt = null;
     }
 
     onNotePlayed() {
+        if (this.startedAt === null) {
+            this.startedAt = Date.now();
+        }
         do {
             if (this.staffEntryIndex < this.wrapper.getNumberOfStaffEntriesInMeasure(this.measureIndex) - 1) {
                 this.staffEntryIndex++;

@@ -8,7 +8,7 @@
                     <v-list two-line v-if="songEntity.highscores.length > 0">
                         <v-list-tile v-for="(highscore, index) in songEntity.highscores" :key="index">
                             <v-list-tile-content>
-                                <v-list-tile-title>{{ highscore.errors }} Errors</v-list-tile-title>
+                                <v-list-tile-title>{{ highscore.errors }} Errors, {{ highscore.time / 1000 }} Seconds</v-list-tile-title>
                                 <v-list-tile-sub-title>{{ highscore.date }}</v-list-tile-sub-title>
                             </v-list-tile-content>
                         </v-list-tile>

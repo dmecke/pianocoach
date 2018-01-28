@@ -15,7 +15,25 @@ export default class Song {
 
     public addHighscore(highscore: Highscore): void {
         this.highscores.push(highscore);
-        this.highscores.sort((a: Highscore, b: Highscore) => a.errors > b.errors ? 1 : b.errors > a.errors ? -1 : 0);
+        this.highscores.sort((a: Highscore, b: Highscore) => {
+            if (a.errors > b.errors) {
+                return 1;
+            }
+
+            if (b.errors > a.errors) {
+                return -1;
+            }
+
+            if (a.time > b.time) {
+                return 1;
+            }
+
+            if (b.time > a.time) {
+                return -1;
+            }
+
+            return 0;
+        });
 
         window.localStorage.setItem(this.getItemName(), JSON.stringify(this.highscores));
     }
