@@ -976,9 +976,9 @@
         <voice>1</voice>
         <type>eighth</type>
         </note>
-      <note default-x="83.79" default-y="-15.00">
+      <note default-x="83.79" default-y="-10.00">
         <pitch>
-          <step>C</step>
+          <step>D</step>
           <octave>5</octave>
           </pitch>
         <duration>1</duration>
