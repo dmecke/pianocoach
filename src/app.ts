@@ -22,6 +22,8 @@ Vue.use(Vuetify, {
     }
 });
 
+window.bus = new Vue();
+
 new Vue({
     el: '#app',
     router,

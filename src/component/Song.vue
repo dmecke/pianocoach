@@ -1,10 +1,9 @@
 <template>
     <div>
-        <v-chip text-color="white" class="primary">
-            <v-avatar class="accent">{{ errors }}</v-avatar>
-            Missed Notes
-        </v-chip>
-        <pc-score :song="song" :measure-index="measureIndex" :staff-entry-index="staffEntryIndex" @loaded="onSongLoaded($event)"></pc-score>
+        <div style="text-align: center">
+            <v-progress-circular :value="measureIndex / wrapper.getNumberOfMeasures() * 100" v-if="wrapper">{{ errors }}</v-progress-circular>
+        </div>
+        <pc-score :song="song" :measure-index="measureIndex" :staff-entry-index="staffEntryIndex"></pc-score>
         <pc-midi-input :song="song" :wrapper="wrapper" :measure-index="measureIndex" :staff-entry-index="staffEntryIndex" @notePlayed="onNotePlayed()" @noteError="errors++"></pc-midi-input>
     </div>
 </template>
@@ -72,8 +71,8 @@ export default class Song extends Vue {
         } while (this.wrapper.isSkipped(this.measureIndex, this.staffEntryIndex));
     }
 
-    onSongLoaded(wrapper) {
-        this.wrapper = wrapper;
+    public created(): void {
+        window.bus.$on('song_loaded', (wrapper) => this.wrapper = wrapper);
     }
 
 }

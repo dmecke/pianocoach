@@ -1,6 +1,5 @@
 <template>
     <div>
-        <v-btn primary @click.stop="highscore = true">Highscore</v-btn>
         <v-dialog v-model="highscore" max-width="500px">
             <v-card>
                 <v-card-title><h3 class="headline">Highscore</h3></v-card-title>
@@ -20,7 +19,6 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-
         <pc-song :song="songEntity"></pc-song>
     </div>
 </template>
@@ -50,6 +48,10 @@ export default class PageSong extends Vue {
 
     get songEntity(): SongEntity {
         return SongRepository.find(this.song);
+    }
+
+    created(): void {
+        window.bus.$on('show_highscore', () => this.highscore = true);
     }
 
 }

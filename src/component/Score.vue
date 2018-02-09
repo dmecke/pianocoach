@@ -1,5 +1,5 @@
 <template>
-    <div style="width: 10000px; transform: translateX(0)"></div>
+    <div></div>
 </template>
 
 <script lang="ts">
@@ -45,13 +45,13 @@ export default class Score extends Vue {
 
     renderScore() {
         this.wrapper.highlightNote(this.measureIndex, this.staffEntryIndex);
-        this.wrapper.render(this.measureIndex, this.staffEntryIndex);
+        this.wrapper.render();
     }
 
     loadSong() {
         this.wrapper.loadSong(this.song).then(() => {
             this.renderScore();
-            this.$emit('loaded', this.wrapper);
+            window.bus.$emit('song_loaded', this.wrapper);
         });
     }
 
@@ -59,5 +59,10 @@ export default class Score extends Vue {
         this.wrapper = new SongWrapper(this.$el);
         this.loadSong();
     }
+
+    public destroyed(): void {
+        window.bus.$emit('song_unloaded');
+    }
+
 }
 </script>
