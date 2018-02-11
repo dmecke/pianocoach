@@ -27,12 +27,6 @@ import SongWrapper from "../js/SongWrapper";
         song() {
             this.loadSong();
             this.renderScore();
-        },
-        measureIndex() {
-            this.renderScore();
-        },
-        staffEntryIndex() {
-            this.renderScore();
         }
     }
 })
@@ -44,8 +38,8 @@ export default class Score extends Vue {
     staffEntryIndex: number;
 
     renderScore() {
-        this.wrapper.highlightNote(this.measureIndex, this.staffEntryIndex);
         this.wrapper.render();
+        this.wrapper.osmd.cursor.show();
     }
 
     loadSong() {

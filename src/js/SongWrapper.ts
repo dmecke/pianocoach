@@ -15,6 +15,7 @@ export default class SongWrapper {
     public loadSong(song: Song): Promise<void> {
         return new Promise<void>((resolve) => {
             this.osmd.load(song.xml).then(() => {
+                this.osmd.cursor.cursorElement.style.zIndex = 0;
                 this.measureList = this.osmd.graphic.measureList;
                 resolve();
             });
@@ -27,14 +28,6 @@ export default class SongWrapper {
 
     public getSongElementAt(measureIndex: number, staffEntryIndex: number): SongElement {
         return new SongElement(this.measureList[measureIndex][0].staffEntries[staffEntryIndex]);
-    }
-
-    public highlightNote(measureIndex: number, staffEntryIndex: number): void {
-        // make all notes black
-        this.measureList.forEach(measure => measure[0].staffEntries.forEach(staffEntry => staffEntry.vfNotes[1].setStyle({ fillStyle: 'black', strokeStyle: 'black' })));
-
-        // make current notes red
-        this.measureList[measureIndex][0].staffEntries[staffEntryIndex].vfNotes[1].setStyle({ fillStyle: 'red', strokeStyle: 'red' });
     }
 
     public isSkipped(measureIndex: number, staffEntryIndex: number): boolean {

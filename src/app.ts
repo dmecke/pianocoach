@@ -29,3 +29,28 @@ new Vue({
     router,
     render: h => h(App)
 });
+
+window.navigator.requestMIDIAccess()
+    .then(access => {
+        let inputs = access.inputs.values();
+        for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
+            input.value.onmidimessage = function(message) {
+                let noteCode = message.data[1];
+                let velocity = message.data[2];
+                let type = message.data[0];
+
+                if (type === 144 && velocity > 0) {
+                    // key pressed
+                    window.bus.$emit('key_pressed', codeToNote(noteCode));
+                }
+                if (type === 128 || velocity === 0) {
+                    // key released
+                }
+            }
+        }
+    });
+
+
+function codeToNote(code) {
+    return code - 12;
+}
