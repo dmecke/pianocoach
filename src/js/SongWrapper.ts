@@ -1,6 +1,6 @@
 import {OSMD} from "opensheetmusicdisplay";
 import Song from "./Song";
-import SongElement2 from "./SongElement";
+import SongElement from "./SongElement";
 
 export default class SongWrapper {
 
@@ -29,8 +29,8 @@ export default class SongWrapper {
         this.errors = 0;
     }
 
-    public getCurrentSongElement(): SongElement2 {
-        return new SongElement2(this.osmd.cursor.iterator.currentVoiceEntries);
+    public getCurrentSongElement(): SongElement {
+        return new SongElement(this.osmd.cursor.iterator.currentVoiceEntries);
     }
 
     private getNumberOfMeasures(): number {
