@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="text-align: center">
-            <v-progress-circular :size="50" :value="wrapper.progress()" v-if="wrapper">{{ errors }}</v-progress-circular>
+            <v-progress-circular :size="50" :value="wrapper.progress()" v-if="wrapper">{{ wrapper.getErrors() }}</v-progress-circular>
         </div>
         <pc-score :song="song"></pc-score>
     </div>
@@ -34,17 +34,15 @@ import Highscore from "../js/Highscore";
 export default class Song extends Vue {
 
     startedAt: number = null;
-    errors: number = 0;
     wrapper: SongWrapper|null = null;
     song: SongEntity|null;
 
     finishSong() {
-        this.song.addHighscore(new Highscore(this.errors, Date.now() - this.startedAt));
+        this.song.addHighscore(new Highscore(this.wrapper.getErrors(), Date.now() - this.startedAt));
         this.resetSong();
     }
 
     resetSong() {
-        this.errors = 0;
         this.startedAt = null;
         this.wrapper.reset();
     }
@@ -69,7 +67,7 @@ export default class Song extends Vue {
                 }
             } while (this.wrapper.getCurrentSongElement().isSkipped());
         });
-        window.bus.$on('note_error', () => this.errors++);
+        window.bus.$on('note_error', () => this.wrapper.addError());
     }
 
 }

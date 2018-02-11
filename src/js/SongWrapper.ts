@@ -7,6 +7,7 @@ export default class SongWrapper {
 
     private osmd: OSMD;
     private measureList: Array<StaffMeasure>|null = [];
+    private errors: number = 0;
 
     constructor(element) {
         this.osmd = new OSMD(element);
@@ -28,6 +29,7 @@ export default class SongWrapper {
 
     public reset(): void {
         this.osmd.cursor.reset();
+        this.errors = 0;
     }
 
     public getCurrentSongElement(): SongElement2 {
@@ -40,6 +42,14 @@ export default class SongWrapper {
 
     public progress(): number {
         return this.osmd.cursor.iterator.currentMeasureIndex / this.getNumberOfMeasures() * 100;
+    }
+
+    public addError(): void {
+        this.errors++;
+    }
+
+    public getErrors(): number {
+        return this.errors;
     }
 
 }
