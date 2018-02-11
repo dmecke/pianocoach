@@ -1,33 +1,34 @@
-import {VexFlowStaffEntry} from "opensheetmusicdisplay/dist/src/MusicalScore/Graphical/VexFlow/VexFlowStaffEntry";
 import {StaveNote} from 'vexflow/src/stavenote';
-// import {StaveNote} from 'opensheetmusicdisplay/external/vexflow/vexflow';
+import {VoiceEntry} from "opensheetmusicdisplay/dist/src/MusicalScore/VoiceData/VoiceEntry";
 
 export default class SongElement {
 
-    private element: VexFlowStaffEntry;
+    private voiceEntries: VoiceEntry[];
 
-    constructor(element: VexFlowStaffEntry) {
-        this.element = element;
+    constructor(voiceEntries: VoiceEntry[]) {
+        this.voiceEntries = voiceEntries;
     }
 
     public getHalfTone(): number {
-        return this.element.sourceStaffEntry.voiceEntries[0].notes[0].halfTone;
+        if (!this.voiceEntries) {
+            return 0;
+        }
+        let voiceEntry = this.voiceEntries[0]; // @todo take all voices into account!
+        let note = voiceEntry.notes[0] // @todo take all notes into account!
+
+        return note.halfTone;
     }
 
-    public isPause(): boolean {
-        return this.getNote().noteType === 'r';
+    public isSkipped(): boolean {
+        if (this.isPause()) {
+            return true;
+        }
+
+        return false;
     }
 
-    public getVexFlowId(): string {
-        return this.getNote().attrs.id;
-    }
-
-    public getDuration(): string {
-        return this.getNote().duration;
-    }
-
-    private getNote(): StaveNote {
-        return this.element.vfNotes[1];
+    private isPause(): boolean {
+        return this.getHalfTone() === 0;
     }
 
 }

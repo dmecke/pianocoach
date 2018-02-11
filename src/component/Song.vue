@@ -1,9 +1,9 @@
 <template>
     <div>
         <div style="text-align: center">
-            <v-progress-circular :size="50" :value="measureIndex / wrapper.getNumberOfMeasures() * 100" v-if="wrapper">{{ errors }}</v-progress-circular>
+            <v-progress-circular :size="50" :value="wrapper.progress()" v-if="wrapper">{{ errors }}</v-progress-circular>
         </div>
-        <pc-score :song="song" :measure-index="measureIndex" :staff-entry-index="staffEntryIndex"></pc-score>
+        <pc-score :song="song"></pc-score>
     </div>
 </template>
 
@@ -33,9 +33,7 @@ import Highscore from "../js/Highscore";
 })
 export default class Song extends Vue {
 
-    measureIndex: number = 0;
     startedAt: number = null;
-    staffEntryIndex: number = 0;
     errors: number = 0;
     wrapper: SongWrapper|null = null;
     song: SongEntity|null;
@@ -46,20 +44,15 @@ export default class Song extends Vue {
     }
 
     resetSong() {
-        this.measureIndex = 0;
-        this.staffEntryIndex = 0;
         this.errors = 0;
         this.startedAt = null;
-    }
-
-    get currentNote() {
-        return this.wrapper.getSongElementAt(this.measureIndex, this.staffEntryIndex).getHalfTone();
+        this.wrapper.reset();
     }
 
     public created(): void {
         window.bus.$on('song_loaded', (wrapper) => this.wrapper = wrapper);
         window.bus.$on('key_pressed', (note) => {
-            if (note === this.currentNote) {
+            if (note === this.wrapper.getCurrentSongElement().getHalfTone()) {
                 window.bus.$emit('note_played');
             } else {
                 window.bus.$emit('note_error');
@@ -69,18 +62,12 @@ export default class Song extends Vue {
             if (this.startedAt === null) {
                 this.startedAt = Date.now();
             }
-            // this.wrapper.osmd.cursor.show();
-            this.wrapper.osmd.cursor.next();
             do {
-                if (this.staffEntryIndex < this.wrapper.getNumberOfStaffEntriesInMeasure(this.measureIndex) - 1) {
-                    this.staffEntryIndex++;
-                } else if (this.measureIndex < this.wrapper.getNumberOfMeasures() - 1) {
-                    this.staffEntryIndex = 0;
-                    this.measureIndex++;
-                } else {
+                this.wrapper.osmd.cursor.next();
+                if (this.wrapper.osmd.cursor.iterator.endReached) {
                     this.finishSong();
                 }
-            } while (this.wrapper.isSkipped(this.measureIndex, this.staffEntryIndex));
+            } while (this.wrapper.getCurrentSongElement().isSkipped());
         });
         window.bus.$on('note_error', () => this.errors++);
     }

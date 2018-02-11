@@ -14,14 +14,6 @@ import SongWrapper from "../js/SongWrapper";
             type: Song,
             required: true,
         },
-        measureIndex: {
-            type: Number,
-            required: true,
-        },
-        staffEntryIndex: {
-            type: Number,
-            required: true,
-        }
     },
     watch: {
         song() {
@@ -34,8 +26,6 @@ export default class Score extends Vue {
 
     wrapper: SongWrapper|null = null;
     song: Song;
-    measureIndex: number;
-    staffEntryIndex: number;
 
     renderScore() {
         this.wrapper.render();

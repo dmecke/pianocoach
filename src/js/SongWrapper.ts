@@ -1,7 +1,7 @@
 import {OSMD} from "opensheetmusicdisplay";
 import Song from "./Song";
-import SongElement from "./SongElement";
 import {StaffMeasure} from "opensheetmusicdisplay/dist/src/MusicalScore/Graphical/StaffMeasure";
+import SongElement2 from "./SongElement";
 
 export default class SongWrapper {
 
@@ -26,33 +26,20 @@ export default class SongWrapper {
         this.osmd.render();
     }
 
-    public getSongElementAt(measureIndex: number, staffEntryIndex: number): SongElement {
-        return new SongElement(this.measureList[measureIndex][0].staffEntries[staffEntryIndex]);
+    public reset(): void {
+        this.osmd.cursor.reset();
     }
 
-    public isSkipped(measureIndex: number, staffEntryIndex: number): boolean {
-        if (this.getSongElementAt(measureIndex, staffEntryIndex).isPause()) {
-            return true;
-        }
-
-        if (this.isEndOfTie(measureIndex, staffEntryIndex)) {
-            return true;
-        }
-
-        return false;
+    public getCurrentSongElement(): SongElement2 {
+        return new SongElement2(this.osmd.cursor.iterator.currentVoiceEntries);
     }
 
-    public getNumberOfMeasures(): number {
-        return this.measureList.length;
+    private getNumberOfMeasures(): number {
+        return this.osmd.sheet.sourceMeasures.length;
     }
 
-    public getNumberOfStaffEntriesInMeasure(measureIndex): number {
-        return this.measureList[measureIndex][0].staffEntries.length;
+    public progress(): number {
+        return this.osmd.cursor.iterator.currentMeasureIndex / this.getNumberOfMeasures() * 100;
     }
 
-    private isEndOfTie(measureIndex: number, staffEntryIndex: number): boolean {
-        let element = this.getSongElementAt(measureIndex, staffEntryIndex);
-
-        return this.measureList[measureIndex][0].vfTies.filter(staveTie => !!staveTie.last_note && staveTie.last_note.attrs.id === element.getVexFlowId()).length > 0;
-    }
 }
