@@ -7,7 +7,7 @@ export default class OsmdWrapper
     private osmd: OpenSheetMusicDisplay;
 
     constructor(element) {
-        this.osmd = new OpenSheetMusicDisplay(element);
+        this.osmd = new OpenSheetMusicDisplay(element, { drawingParameters: 'compact' });
     }
 
     public loadSong(songXml: string): Promise<void> {
