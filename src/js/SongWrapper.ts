@@ -1,28 +1,23 @@
-import {OpenSheetMusicDisplay} from "opensheetmusicdisplay";
-import Song from "./Song";
+import SongData from "./Song";
 import SongElement from "./SongElement";
 import {Cursor} from "opensheetmusicdisplay/build/dist/src/OpenSheetMusicDisplay/Cursor";
+import OsmdWrapper from "./OsmdWrapper";
 
 export default class SongWrapper {
 
-    private osmd: OpenSheetMusicDisplay;
+    private osmdWrapper: OsmdWrapper;
     private errors: number = 0;
 
     constructor(element) {
-        this.osmd = new OpenSheetMusicDisplay(element);
+        this.osmdWrapper = new OsmdWrapper(element);
     }
 
-    public loadSong(song: Song): Promise<void> {
-        return new Promise<void>((resolve) => {
-            this.osmd.load(song.xml).then(() => {
-                this.getCursor().cursorElement.style.zIndex = 0;
-                resolve();
-            });
-        });
+    public loadSong(song: SongData): Promise<void> {
+        return this.osmdWrapper.loadSong(song.xml);
     }
 
     public render(): void {
-        this.osmd.render();
+        this.osmdWrapper.render();
     }
 
     public reset(): void {
@@ -31,15 +26,15 @@ export default class SongWrapper {
     }
 
     public getCurrentSongElement(): SongElement {
-        return new SongElement(this.getCursorIterator().CurrentVoiceEntries);
+        return new SongElement(this.osmdWrapper.getCursorIterator().CurrentVoiceEntries);
     }
 
     private getNumberOfMeasures(): number {
-        return this.osmd.sheet.sourceMeasures.length;
+        return this.osmdWrapper.getSourceMeasures().length;
     }
 
     public progress(): number {
-        return this.getCursorIterator().CurrentMeasureIndex / this.getNumberOfMeasures() * 100;
+        return this.osmdWrapper.getCursorIterator().CurrentMeasureIndex / this.getNumberOfMeasures() * 100;
     }
 
     public addError(): void {
@@ -51,14 +46,10 @@ export default class SongWrapper {
     }
 
     public getCursor(): Cursor {
-        return this.osmd.cursor;
-    }
-
-    private getCursorIterator() {
-        return this.getCursor().iterator;
+        return this.osmdWrapper.getCursor();
     }
 
     public isEndReached(): boolean {
-        return this.getCursorIterator().EndReached;
+        return this.osmdWrapper.getCursorIterator().EndReached;
     }
 }

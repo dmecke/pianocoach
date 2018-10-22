@@ -1,6 +1,6 @@
 import Highscore from "./Highscore";
 
-export default class Song {
+export default class SongData {
 
     title: string;
     xml: string;

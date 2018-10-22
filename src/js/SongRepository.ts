@@ -1,6 +1,6 @@
 ///<reference path="../../typings.d.ts"/>
 
-import Song from "./Song";
+import SongData from "./Song";
 
 import * as SongTonleiter from '../song/tonleiter.xml';
 import * as SongDemons from '../song/demons.xml';
@@ -9,29 +9,29 @@ import * as SongTetris from '../song/tetris.xml';
 
 export default class SongRepository {
 
-    public static find(name: string): Song {
+    public static find(name: string): SongData {
 
         switch (name) {
             case 'tonleiter':
-                return new Song(name, SongTonleiter);
+                return new SongData(name, SongTonleiter);
 
             case 'demons':
-                return new Song(name, SongDemons);
+                return new SongData(name, SongDemons);
 
             case 'starwars':
-                return new Song(name, SongStarWars);
+                return new SongData(name, SongStarWars);
 
             case 'tetris':
-                return new Song(name, SongTetris);
+                return new SongData(name, SongTetris);
         }
     }
 
-    public static findAll(): Array<Song> {
+    public static findAll(): Array<SongData> {
         return [
-            new Song('tonleiter', SongTonleiter),
-            new Song('demons', SongDemons),
-            new Song('starwars', SongStarWars),
-            new Song('tetris', SongTetris),
+            new SongData('tonleiter', SongTonleiter),
+            new SongData('demons', SongDemons),
+            new SongData('starwars', SongStarWars),
+            new SongData('tetris', SongTetris),
         ]
     }
 

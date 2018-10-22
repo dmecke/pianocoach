@@ -5,14 +5,14 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import Song from "../js/Song";
+import SongData from "../js/Song";
 import SongWrapper from "../js/SongWrapper";
 import {EventBus} from "../js/EventBus";
 
 @Component({
     props: {
         song: {
-            type: Song,
+            type: SongData,
             required: true,
         },
     },
@@ -26,7 +26,7 @@ import {EventBus} from "../js/EventBus";
 export default class Score extends Vue {
 
     wrapper: SongWrapper|null = null;
-    song: Song;
+    song: SongData;
 
     renderScore() {
         this.wrapper.render();

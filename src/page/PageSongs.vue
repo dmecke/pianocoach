@@ -19,13 +19,13 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
-import Song from "../js/Song";
+import SongData from "../js/Song";
 import SongRepository from "../js/SongRepository";
 
 @Component
 export default class PageSongs extends Vue {
 
-    songs: Array<Song> = SongRepository.findAll();
+    songs: Array<SongData> = SongRepository.findAll();
 
 }
 </script>
