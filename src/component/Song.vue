@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="text-align: center">
-            <v-progress-circular :size="50" :value="song.progress()" v-if="song">{{ song.getErrors() }}</v-progress-circular>
+            <v-progress-circular :size="50" :value="progress" v-if="song">{{ song.getErrors() }}</v-progress-circular>
         </div>
         <pc-score :song-data="songData"></pc-score>
     </div>
@@ -34,9 +34,11 @@ import {EventBus} from "../js/EventBus";
 })
 export default class Song extends Vue {
 
+    songData: SongData|null;
+
     startedAt: number = null;
     song: SongEntity|null = null;
-    songData: SongData|null;
+    progress: number = 0;
 
     finishSong() {
         this.songData.addHighscore(new Highscore(this.song.getErrors(), Date.now() - this.startedAt));
@@ -56,6 +58,7 @@ export default class Song extends Vue {
             } else {
                 EventBus.$emit('note_error');
             }
+            this.progress = this.song.progress();
         });
         EventBus.$on('note_played', () => {
             if (this.startedAt === null) {

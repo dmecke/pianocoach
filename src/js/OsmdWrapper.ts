@@ -1,5 +1,4 @@
 import {OpenSheetMusicDisplay} from "opensheetmusicdisplay";
-import SongData from "./SongData";
 import {SourceMeasure} from "opensheetmusicdisplay/build/dist/src/MusicalScore/VoiceData/SourceMeasure";
 import {Cursor} from "opensheetmusicdisplay/build/dist/src/OpenSheetMusicDisplay/Cursor";
 
