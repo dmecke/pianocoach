@@ -30,7 +30,7 @@ export default class Score extends Vue {
 
     renderScore() {
         this.wrapper.render();
-        this.wrapper.osmd.cursor.show();
+        this.wrapper.getCursor().show();
     }
 
     loadSong() {

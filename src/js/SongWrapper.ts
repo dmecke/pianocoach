@@ -1,10 +1,11 @@
 import {OpenSheetMusicDisplay} from "opensheetmusicdisplay";
 import Song from "./Song";
 import SongElement from "./SongElement";
+import {Cursor} from "opensheetmusicdisplay/build/dist/src/OpenSheetMusicDisplay/Cursor";
 
 export default class SongWrapper {
 
-    public osmd: OpenSheetMusicDisplay;
+    private osmd: OpenSheetMusicDisplay;
     private errors: number = 0;
 
     constructor(element) {
@@ -14,7 +15,7 @@ export default class SongWrapper {
     public loadSong(song: Song): Promise<void> {
         return new Promise<void>((resolve) => {
             this.osmd.load(song.xml).then(() => {
-                this.osmd.cursor.cursorElement.style.zIndex = 0;
+                this.getCursor().cursorElement.style.zIndex = 0;
                 resolve();
             });
         });
@@ -25,12 +26,12 @@ export default class SongWrapper {
     }
 
     public reset(): void {
-        this.osmd.cursor.reset();
+        this.getCursor().reset();
         this.errors = 0;
     }
 
     public getCurrentSongElement(): SongElement {
-        return new SongElement(this.osmd.cursor.iterator.currentVoiceEntries);
+        return new SongElement(this.getCursorIterator().CurrentVoiceEntries);
     }
 
     private getNumberOfMeasures(): number {
@@ -38,7 +39,7 @@ export default class SongWrapper {
     }
 
     public progress(): number {
-        return this.osmd.cursor.iterator.currentMeasureIndex / this.getNumberOfMeasures() * 100;
+        return this.getCursorIterator().CurrentMeasureIndex / this.getNumberOfMeasures() * 100;
     }
 
     public addError(): void {
@@ -49,4 +50,15 @@ export default class SongWrapper {
         return this.errors;
     }
 
+    public getCursor(): Cursor {
+        return this.osmd.cursor;
+    }
+
+    private getCursorIterator() {
+        return this.getCursor().iterator;
+    }
+
+    public isEndReached(): boolean {
+        return this.getCursorIterator().EndReached;
+    }
 }

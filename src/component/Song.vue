@@ -62,8 +62,8 @@ export default class Song extends Vue {
                 this.startedAt = Date.now();
             }
             do {
-                this.wrapper.osmd.cursor.next();
-                if (this.wrapper.osmd.cursor.iterator.endReached) {
+                this.wrapper.getCursor().next();
+                if (this.wrapper.isEndReached()) {
                     this.finishSong();
                 }
             } while (this.wrapper.getCurrentSongElement().isSkipped());
