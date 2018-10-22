@@ -9,6 +9,7 @@ import 'vuetify/dist/vuetify.css';
 import './style/global.scss';
 
 import router from './router';
+import {EventBus} from "./js/EventBus";
 
 Vue.use(Vuetify, {
     theme: {
@@ -21,8 +22,6 @@ Vue.use(Vuetify, {
         warning: '#FFC107'
     }
 });
-
-window.bus = new Vue();
 
 new Vue({
     el: '#app',
@@ -41,7 +40,7 @@ window.navigator.requestMIDIAccess()
 
                 if (type === 144 && velocity > 0) {
                     // key pressed
-                    window.bus.$emit('key_pressed', codeToNote(noteCode));
+                    EventBus.$emit('key_pressed', codeToNote(noteCode));
                 }
                 if (type === 128 || velocity === 0) {
                     // key released

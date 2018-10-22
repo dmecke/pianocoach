@@ -14,6 +14,7 @@ import Score from './Score.vue';
 import SongEntity from '../js/Song';
 import SongWrapper from "../js/SongWrapper";
 import Highscore from "../js/Highscore";
+import {EventBus} from "../js/EventBus";
 
 @Component({
     components: {
@@ -48,15 +49,15 @@ export default class Song extends Vue {
     }
 
     public created(): void {
-        window.bus.$on('song_loaded', (wrapper) => this.wrapper = wrapper);
-        window.bus.$on('key_pressed', (note) => {
+        EventBus.$on('song_loaded', (wrapper) => this.wrapper = wrapper);
+        EventBus.$on('key_pressed', (note) => {
             if (note === this.wrapper.getCurrentSongElement().getHalfTone()) {
-                window.bus.$emit('note_played');
+                EventBus.$emit('note_played');
             } else {
-                window.bus.$emit('note_error');
+                EventBus.$emit('note_error');
             }
         });
-        window.bus.$on('note_played', () => {
+        EventBus.$on('note_played', () => {
             if (this.startedAt === null) {
                 this.startedAt = Date.now();
             }
@@ -67,7 +68,7 @@ export default class Song extends Vue {
                 }
             } while (this.wrapper.getCurrentSongElement().isSkipped());
         });
-        window.bus.$on('note_error', () => this.wrapper.addError());
+        EventBus.$on('note_error', () => this.wrapper.addError());
     }
 
 }

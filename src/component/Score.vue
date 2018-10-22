@@ -7,6 +7,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import Song from "../js/Song";
 import SongWrapper from "../js/SongWrapper";
+import {EventBus} from "../js/EventBus";
 
 @Component({
     props: {
@@ -35,7 +36,7 @@ export default class Score extends Vue {
     loadSong() {
         this.wrapper.loadSong(this.song).then(() => {
             this.renderScore();
-            window.bus.$emit('song_loaded', this.wrapper);
+            EventBus.$emit('song_loaded', this.wrapper);
         });
     }
 
@@ -45,7 +46,7 @@ export default class Score extends Vue {
     }
 
     public destroyed(): void {
-        window.bus.$emit('song_unloaded');
+        EventBus.$emit('song_unloaded');
     }
 
 }

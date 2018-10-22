@@ -16,12 +16,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import {EventBus} from "../js/EventBus";
 
 @Component
 export default class App extends Vue {
 
     private showHighscore(): void {
-        window.bus.$emit('show_highscore');
+        EventBus.$emit('show_highscore');
     }
 
 }

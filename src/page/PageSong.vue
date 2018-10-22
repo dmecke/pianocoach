@@ -29,6 +29,7 @@ import Component from 'vue-class-component';
 import Song from '../component/Song.vue';
 import SongEntity from "../js/Song";
 import SongRepository from "../js/SongRepository";
+import {EventBus} from "../js/EventBus";
 
 @Component({
     components: {
@@ -51,7 +52,7 @@ export default class PageSong extends Vue {
     }
 
     created(): void {
-        window.bus.$on('show_highscore', () => this.highscore = true);
+        EventBus.$on('show_highscore', () => this.highscore = true);
     }
 
 }
