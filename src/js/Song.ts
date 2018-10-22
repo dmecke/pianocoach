@@ -1,49 +1,55 @@
-import Highscore from "./Highscore";
+import SongData from "./SongData";
+import SongElement from "./SongElement";
+import {Cursor} from "opensheetmusicdisplay/build/dist/src/OpenSheetMusicDisplay/Cursor";
+import OsmdWrapper from "./OsmdWrapper";
 
-export default class SongData {
+export default class Song {
 
-    title: string;
-    xml: string;
-    highscores: Array<Highscore> = [];
+    private osmdWrapper: OsmdWrapper;
+    private errors: number = 0;
 
-    constructor(title: string, xml) {
-        this.title = title;
-        this.xml = xml;
-
-        this.loadHighscores();
+    constructor(element) {
+        this.osmdWrapper = new OsmdWrapper(element);
     }
 
-    public addHighscore(highscore: Highscore): void {
-        this.highscores.push(highscore);
-        this.highscores.sort((a: Highscore, b: Highscore) => {
-            if (a.errors > b.errors) {
-                return 1;
-            }
-
-            if (b.errors > a.errors) {
-                return -1;
-            }
-
-            if (a.time > b.time) {
-                return 1;
-            }
-
-            if (b.time > a.time) {
-                return -1;
-            }
-
-            return 0;
-        });
-
-        window.localStorage.setItem(this.getItemName(), JSON.stringify(this.highscores));
+    public loadSong(song: SongData): Promise<void> {
+        return this.osmdWrapper.loadSong(song.xml);
     }
 
-    private loadHighscores(): void {
-        let highscore = window.localStorage.getItem(this.getItemName());
-        this.highscores = highscore === null ? [] : JSON.parse(highscore);
+    public render(): void {
+        this.osmdWrapper.render();
     }
 
-    private getItemName(): string {
-        return 'highscore_' + this.title;
+    public reset(): void {
+        this.getCursor().reset();
+        this.errors = 0;
+    }
+
+    public getCurrentSongElement(): SongElement {
+        return new SongElement(this.osmdWrapper.getCursorIterator().CurrentVoiceEntries);
+    }
+
+    private getNumberOfMeasures(): number {
+        return this.osmdWrapper.getSourceMeasures().length;
+    }
+
+    public progress(): number {
+        return this.osmdWrapper.getCursorIterator().CurrentMeasureIndex / this.getNumberOfMeasures() * 100;
+    }
+
+    public addError(): void {
+        this.errors++;
+    }
+
+    public getErrors(): number {
+        return this.errors;
+    }
+
+    public getCursor(): Cursor {
+        return this.osmdWrapper.getCursor();
+    }
+
+    public isEndReached(): boolean {
+        return this.osmdWrapper.getCursorIterator().EndReached;
     }
 }

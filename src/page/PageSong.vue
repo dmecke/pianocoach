@@ -27,7 +27,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import Song from '../component/Song.vue';
-import SongEntity from "../js/Song";
+import SongEntity from "../js/SongData";
 import SongRepository from "../js/SongRepository";
 import {EventBus} from "../js/EventBus";
 

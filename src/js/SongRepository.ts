@@ -1,6 +1,6 @@
 ///<reference path="../../typings.d.ts"/>
 
-import SongData from "./Song";
+import SongData from "./SongData";
 
 import * as SongTonleiter from '../song/tonleiter.xml';
 import * as SongDemons from '../song/demons.xml';

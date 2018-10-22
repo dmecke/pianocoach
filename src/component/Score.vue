@@ -5,8 +5,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import SongData from "../js/Song";
-import SongWrapper from "../js/SongWrapper";
+import SongData from "../js/SongData";
+import Song from "../js/Song";
 import {EventBus} from "../js/EventBus";
 
 @Component({
@@ -25,7 +25,7 @@ import {EventBus} from "../js/EventBus";
 })
 export default class Score extends Vue {
 
-    wrapper: SongWrapper|null = null;
+    wrapper: Song|null = null;
     song: SongData;
 
     renderScore() {
@@ -41,7 +41,7 @@ export default class Score extends Vue {
     }
 
     mounted() {
-        this.wrapper = new SongWrapper(this.$el);
+        this.wrapper = new Song(this.$el);
         this.loadSong();
     }
 

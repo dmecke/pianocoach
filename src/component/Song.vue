@@ -11,8 +11,8 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import Score from './Score.vue';
-import SongEntity from '../js/Song';
-import SongWrapper from "../js/SongWrapper";
+import SongEntity from '../js/SongData';
+import Song from "../js/Song";
 import Highscore from "../js/Highscore";
 import {EventBus} from "../js/EventBus";
 
@@ -35,7 +35,7 @@ import {EventBus} from "../js/EventBus";
 export default class Song extends Vue {
 
     startedAt: number = null;
-    wrapper: SongWrapper|null = null;
+    wrapper: Song|null = null;
     song: SongEntity|null;
 
     finishSong() {

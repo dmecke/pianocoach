@@ -19,7 +19,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
-import SongData from "../js/Song";
+import SongData from "../js/SongData";
 import SongRepository from "../js/SongRepository";
 
 @Component
