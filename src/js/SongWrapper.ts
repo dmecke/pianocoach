@@ -1,14 +1,14 @@
-import {OSMD} from "opensheetmusicdisplay";
+import {OpenSheetMusicDisplay} from "opensheetmusicdisplay";
 import Song from "./Song";
 import SongElement from "./SongElement";
 
 export default class SongWrapper {
 
-    private osmd: OSMD;
+    private osmd: OpenSheetMusicDisplay;
     private errors: number = 0;
 
     constructor(element) {
-        this.osmd = new OSMD(element);
+        this.osmd = new OpenSheetMusicDisplay(element);
     }
 
     public loadSong(song: Song): Promise<void> {
