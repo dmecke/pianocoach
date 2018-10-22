@@ -1,5 +1,5 @@
 import {StaveNote} from 'vexflow/src/stavenote';
-import {VoiceEntry} from "opensheetmusicdisplay/dist/src/MusicalScore/VoiceData/VoiceEntry";
+import {VoiceEntry} from "opensheetmusicdisplay/build/dist/src/MusicalScore/VoiceData/VoiceEntry";
 
 export default class SongElement {
 
@@ -14,7 +14,7 @@ export default class SongElement {
             return 0;
         }
         let voiceEntry = this.voiceEntries[0]; // @todo take all voices into account!
-        let note = voiceEntry.notes[0] // @todo take all notes into account!
+        let note = voiceEntry.Notes[0]; // @todo take all notes into account!
 
         return note.halfTone;
     }

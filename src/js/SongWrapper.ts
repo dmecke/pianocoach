@@ -4,7 +4,7 @@ import SongElement from "./SongElement";
 
 export default class SongWrapper {
 
-    private osmd: OpenSheetMusicDisplay;
+    public osmd: OpenSheetMusicDisplay;
     private errors: number = 0;
 
     constructor(element) {
