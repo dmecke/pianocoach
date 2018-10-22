@@ -83,7 +83,7 @@ module.exports = {
         noInfo: true,
         contentBase: 'public/',
         https: false,
-        port: 80
+        port: 9090
     },
     performance: {
         hints: false
