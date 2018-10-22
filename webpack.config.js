@@ -1,6 +1,6 @@
 let path = require('path');
 let webpack = require('webpack');
-let ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: {
@@ -11,12 +11,13 @@ module.exports = {
         publicPath: '',
         filename: '[name].js'
     },
+    mode: process.env.NODE_ENV,
     module: {
         rules: [
             {
                 test: /\.ts$/,
                 loader: 'ts-loader',
-                exclude: /note_modules/,
+                exclude: /node_modules/,
                 options: {
                     appendTsSuffixTo: [/\.vue$/]
                 }
@@ -28,14 +29,20 @@ module.exports = {
             },
             {
                 test: /\.(css|scss)$/,
-                loader: process.env.NODE_ENV === 'production' ? ExtractTextPlugin.extract('css-loader!postcss-loader!sass-loader') : 'style-loader!css-loader!postcss-loader!sass-loader'
+                use: [
+                    process.env.NODE_ENV === 'production' ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader', 'postcss-loader', 'sass-loader',
+                ],
             },
             {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
                     loaders: {
-                        'scss': 'vue-style-loader!css-loader!sass-loader'
+                        'scss': {
+                            use: [
+                                'vue-style-loader', 'css-loader', 'sass-loader'
+                            ],
+                        },
                     },
                     postcss: [require('autoprefixer')()]
                 }
@@ -66,16 +73,16 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.ts', '.js', '.xml'],
+        extensions: ['.ts', '.js', '.xml', '.vue'],
         alias: {
             'vue$': 'vue/dist/vue.common.js',
         }
     },
     plugins: [
         new webpack.optimize.ModuleConcatenationPlugin(),
-        new ExtractTextPlugin({
+        new MiniCssExtractPlugin({
             filename: '[name].css',
-            allChunks: true
+            chunkFilename: '[id].css',
         }),
     ],
     devServer: {
