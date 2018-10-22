@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="text-align: center">
+        <div style="text-align: center; margin-top: 1rem">
             <v-progress-circular :size="50" :value="progress" v-if="song">{{ song.getErrors() }}</v-progress-circular>
         </div>
         <pc-score :song-data="songData"></pc-score>
