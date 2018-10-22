@@ -1,9 +1,9 @@
 <template>
     <div>
         <div style="text-align: center">
-            <v-progress-circular :size="50" :value="wrapper.progress()" v-if="wrapper">{{ wrapper.getErrors() }}</v-progress-circular>
+            <v-progress-circular :size="50" :value="song.progress()" v-if="song">{{ song.getErrors() }}</v-progress-circular>
         </div>
-        <pc-score :song="song"></pc-score>
+        <pc-score :song-data="songData"></pc-score>
     </div>
 </template>
 
@@ -11,8 +11,8 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import Score from './Score.vue';
-import SongEntity from '../js/SongData';
-import Song from "../js/Song";
+import SongData from '../js/SongData';
+import SongEntity from "../js/Song";
 import Highscore from "../js/Highscore";
 import {EventBus} from "../js/EventBus";
 
@@ -21,8 +21,8 @@ import {EventBus} from "../js/EventBus";
         'pc-score': Score,
     },
     props: {
-        song: {
-            type: SongEntity,
+        songData: {
+            type: SongData,
             required: true,
         }
     },
@@ -35,23 +35,23 @@ import {EventBus} from "../js/EventBus";
 export default class Song extends Vue {
 
     startedAt: number = null;
-    wrapper: Song|null = null;
-    song: SongEntity|null;
+    song: SongEntity|null = null;
+    songData: SongData|null;
 
     finishSong() {
-        this.song.addHighscore(new Highscore(this.wrapper.getErrors(), Date.now() - this.startedAt));
+        this.songData.addHighscore(new Highscore(this.song.getErrors(), Date.now() - this.startedAt));
         this.resetSong();
     }
 
     resetSong() {
         this.startedAt = null;
-        this.wrapper.reset();
+        this.song.reset();
     }
 
     public created(): void {
-        EventBus.$on('song_loaded', (wrapper) => this.wrapper = wrapper);
+        EventBus.$on('song_loaded', (song) => this.song = song);
         EventBus.$on('key_pressed', (note) => {
-            if (note === this.wrapper.getCurrentSongElement().getHalfTone()) {
+            if (note === this.song.getCurrentSongElement().getHalfTone()) {
                 EventBus.$emit('note_played');
             } else {
                 EventBus.$emit('note_error');
@@ -62,13 +62,13 @@ export default class Song extends Vue {
                 this.startedAt = Date.now();
             }
             do {
-                this.wrapper.getCursor().next();
-                if (this.wrapper.isEndReached()) {
+                this.song.getCursor().next();
+                if (this.song.isEndReached()) {
                     this.finishSong();
                 }
-            } while (this.wrapper.getCurrentSongElement().isSkipped());
+            } while (this.song.getCurrentSongElement().isSkipped());
         });
-        EventBus.$on('note_error', () => this.wrapper.addError());
+        EventBus.$on('note_error', () => this.song.addError());
     }
 
 }

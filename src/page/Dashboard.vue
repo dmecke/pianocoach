@@ -23,7 +23,7 @@ import SongData from "../js/SongData";
 import SongRepository from "../js/SongRepository";
 
 @Component
-export default class PageSongs extends Vue {
+export default class Dashboard extends Vue {
 
     songs: Array<SongData> = SongRepository.findAll();
 

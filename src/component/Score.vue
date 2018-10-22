@@ -11,13 +11,13 @@ import {EventBus} from "../js/EventBus";
 
 @Component({
     props: {
-        song: {
+        songData: {
             type: SongData,
             required: true,
         },
     },
     watch: {
-        song() {
+        songData() {
             this.loadSong();
             this.renderScore();
         }
@@ -25,23 +25,23 @@ import {EventBus} from "../js/EventBus";
 })
 export default class Score extends Vue {
 
-    wrapper: Song|null = null;
-    song: SongData;
+    song: Song|null = null;
+    songData: SongData;
 
     renderScore() {
-        this.wrapper.render();
-        this.wrapper.getCursor().show();
+        this.song.render();
+        this.song.getCursor().show();
     }
 
     loadSong() {
-        this.wrapper.loadSong(this.song).then(() => {
+        this.song.loadSong(this.songData).then(() => {
             this.renderScore();
-            EventBus.$emit('song_loaded', this.wrapper);
+            EventBus.$emit('song_loaded', this.song);
         });
     }
 
     mounted() {
-        this.wrapper = new Song(this.$el);
+        this.song = new Song(this.$el);
         this.loadSong();
     }
 
