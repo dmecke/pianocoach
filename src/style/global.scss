@@ -1,1 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
+
+.v-btn--floating .v-icon { // hotfix: icons were not centered on button
+    width: 24px;
+    height: 24px;
+}

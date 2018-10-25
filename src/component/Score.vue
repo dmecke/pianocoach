@@ -48,6 +48,5 @@ export default class Score extends Vue {
     public destroyed(): void {
         EventBus.$emit('song_unloaded');
     }
-
 }
 </script>

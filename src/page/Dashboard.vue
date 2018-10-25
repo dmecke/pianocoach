@@ -7,7 +7,9 @@
                     </v-card-media>
                     <v-card-title style="position: relative" primary-title>
                         <h2 class="headline">{{ song.title }}</h2>
-                        <v-btn fab color="secondary" absolute top right :to="'/song/' + song.title"><v-icon>play_arrow</v-icon></v-btn>
+                        <v-btn fab color="secondary" absolute top right :to="'/song/' + song.title">
+                            <v-icon>play_arrow</v-icon>
+                        </v-btn>
                     </v-card-title>
                 </v-card>
             </v-flex>
